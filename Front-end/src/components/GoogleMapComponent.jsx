@@ -7,7 +7,9 @@ import {
 } from "react-geocode";
 
 setDefaults({
-  key: "AIzaSyD0_6JigNJB3Ly8n_T5EkcVKcY3CnnaXCQ", // Your API key here.
+
+  key: "your key", // Your API key here.
+
   language: "ja", // Default language for responses.
   region: "jp", // Default region for responses.
 });
@@ -46,7 +48,9 @@ const GoogleMapComponent = (props) => {
     }
   }, [newAddress]);
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyD0_6JigNJB3Ly8n_T5EkcVKcY3CnnaXCQ', // Replace with your Google Maps API key
+
+    googleMapsApiKey: 'your key', // Replace with your Google Maps API key
+
     libraries,
   });
 
