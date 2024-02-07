@@ -46,6 +46,10 @@ const userSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'RealEstate',
     }],
+    isAdmin: {
+        type: Boolean,
+        default: false,
+    }
 })
 
 module.exports = mongoose.model('User', userSchema);

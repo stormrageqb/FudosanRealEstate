@@ -20,11 +20,25 @@ const ItemDetailPage = () => {
     const [isFavourite, setIsFavourite] = useState(false);
     const [myId, setMyId] = useState('');
     const [showModal, setShowModal] = useState(false);
+    const [favouriteButtonActive, setFavouriteButtonActive] = useState(isFavourite);
+    const [realEstate, setRealEstate] = useState(null);
+    const [favouriteButtonDisable, setFavouriteButtonDisable] = useState(true);
 
     const searchParams = new URLSearchParams(location.search);
     const realEstateId = searchParams.get('realEstateId');
 
-    
+    useEffect(() => {
+        if(cookies.token) {
+            const myPosts = cookies.user.myPosts;
+            if(myPosts.includes(realEstateId)) {
+                setFavouriteButtonDisable(true);
+                console.log(myPosts, myPosts.includes(realEstateId));
+
+            } else {
+                setFavouriteButtonDisable(false);
+            }
+        }
+    },[realEstate])
 
     useEffect(() => {
         setUser(cookies.user);
@@ -38,10 +52,6 @@ const ItemDetailPage = () => {
         }
     }, [user, realEstateId]);
    
-    const [favouriteButtonActive, setFavouriteButtonActive] = useState(isFavourite);
-    const [realEstate, setRealEstate] = useState(null);
-    
-
     const handleFavouriteButtonClicked = async () => {
         if(cookies.token){
         const params = new URLSearchParams({
@@ -73,12 +83,18 @@ const ItemDetailPage = () => {
     }
     const sendMsgButtonClicked = () => {
         if(cookies.token){
-        const posterId = realEstate.poster;
-        const searchParams = new URLSearchParams();
-        searchParams.set('previous-page','itemDetailPage')
-        searchParams.set('realEstateId', realEstateId);
-        searchParams.set('opponentId', posterId);
-        history.push(`/message-detail?${searchParams.toString()}`);
+            if(cookies.user._id === realEstate.poster){
+                const searchParams = new URLSearchParams({realEstateId, realEstateId}).toString();
+                history.push(`/contact-post?${searchParams}`);
+            }
+            else{
+                const posterId = realEstate.poster;
+                const searchParams = new URLSearchParams();
+                searchParams.set('previous-page','itemDetailPage')
+                searchParams.set('realEstateId', realEstateId);
+                searchParams.set('opponentId', posterId);
+                history.push(`/message-detail?${searchParams.toString()}`);
+            }
         }
         else{
             setShowModal(true);
@@ -134,7 +150,7 @@ const ItemDetailPage = () => {
             <div className='flex justify-center gap-[50px] w-full mt-20'>
                 <div className='flex justify-center items-center w-[380px] h-[80px] bg-[#2A6484] rounded-xl noto-medium text-white text-[24px] cursor-pointer' onClick={sendMsgButtonClicked}>メッセージを送信する</div>
             
-                <div onClick={handleFavouriteButtonClicked}><FavouriteButton parentComponent='realEstateDetailPage' isFavourite={isFavourite}/></div>
+                <button disabled={favouriteButtonDisable} onClick={handleFavouriteButtonClicked}><FavouriteButton parentComponent='realEstateDetailPage' isFavourite={isFavourite}/></button>
                 {
                 (showModal===true) && <FavouriteSetLoginModal setShowModal = {setShowModal} />
                 }

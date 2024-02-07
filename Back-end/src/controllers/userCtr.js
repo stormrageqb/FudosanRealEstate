@@ -35,7 +35,7 @@ const signIn = async (req, res) => {
 
 const signUp = async (req, res) => {
         let user = await User.find({ email: req.body.email }, "");
-        mail = req.body.email;
+        const mail = req.body.email;
         if (!req.body.email.includes('@')) {
             return res.status(500).json({ message: '電子メールの形式が無効です。 含まれている必要があります "@"。' });
         }

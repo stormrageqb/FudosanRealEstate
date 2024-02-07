@@ -47,16 +47,16 @@ const handleconditionDataArray = (data) => {
     e.preventDefault();
     
     setValidationMessage("");
-    if(privacyDataArray.age>100 || privacyDataArray.age<10)
-        return setValidationMessage("あなたの年齢を正しく入力してください!")
-    if(!privacyDataArray.email.includes('@'))
-        return setValidationMessage("メールアドレスを正しく入力してください。");
-    if(Math.abs(privacyDataArray.phoneNumber[0]).toString().trim().length > 3 || Math.abs(privacyDataArray.phoneNumber[0]).toString().trim().length < 2
-        || Math.abs(privacyDataArray.phoneNumber[1]).toString().trim().length > 4 || Math.abs(privacyDataArray.phoneNumber[1]).toString().trim().length < 2
-        || Math.abs(privacyDataArray.phoneNumber[2]).toString().trim().length !== 4 )
-        return setValidationMessage("電話番号を正確に入力してください！");
-    if(Math.abs(privacyDataArray.postalNumber[0]).toString().trim().length !== 3 || Math.abs(privacyDataArray.postalNumber[1]).toString().trim().length !== 4 )
-        return setValidationMessage("郵便番号を正しく入力してください!");
+    // if(privacyDataArray.age>100 || privacyDataArray.age<10)
+    //     return setValidationMessage("あなたの年齢を正しく入力してください!")
+    // if(!privacyDataArray.email.includes('@'))
+    //     return setValidationMessage("メールアドレスを正しく入力してください。");
+    // if(Math.abs(privacyDataArray.phoneNumber[0]).toString().trim().length > 3 || Math.abs(privacyDataArray.phoneNumber[0]).toString().trim().length < 2
+    //     || Math.abs(privacyDataArray.phoneNumber[1]).toString().trim().length > 4 || Math.abs(privacyDataArray.phoneNumber[1]).toString().trim().length < 2
+    //     || Math.abs(privacyDataArray.phoneNumber[2]).toString().trim().length !== 4 )
+    //     return setValidationMessage("電話番号を正確に入力してください！");
+    // if(Math.abs(privacyDataArray.postalNumber[0]).toString().trim().length !== 3 || Math.abs(privacyDataArray.postalNumber[1]).toString().trim().length !== 4 )
+    //     return setValidationMessage("郵便番号を正しく入力してください!");
 
     try {
         const newphoneNumber =parseInt(privacyDataArray.phoneNumber[0].toString()+privacyDataArray.phoneNumber[1].toString()+privacyDataArray.phoneNumber[2].toString()); 
@@ -79,11 +79,18 @@ const handleconditionDataArray = (data) => {
             // ... Append other form data as needed
             
             // Append image files
+            //console.log(uploadDataArray);   
             for (const file of uploadDataArray) {
                 formData.append('images', file);
             }
             // Make a single axios request for both form data and images
+            const res = await axios.post(process.env.REACT_APP_API_BASE_URL + '/postRealEstate', formData)
+            //console.log(formData);
+
+            
+                
           // Handle the response if needed
+        //console.log('Response from backend:', res.data);
         } catch (error) {
           // Handle errors
         console.error('Error sending form data:', error);
@@ -215,7 +222,7 @@ const handleconditionDataArray = (data) => {
                             <div className='flex justify-center'>
                                 <ConditionForm  onDataArrayFromChild={handleconditionDataArray}/>
                             </div>
-                            <p className='text-center pt-[20px]'>{validationMessage}</p>
+                            <p className='text-center text-[20px] pt-[20px] text-yellow-600'>{validationMessage}</p>
                             <div className='flex justify-center pt-[80px] pb-[170px]'>
                                 {
                                     conditionData?

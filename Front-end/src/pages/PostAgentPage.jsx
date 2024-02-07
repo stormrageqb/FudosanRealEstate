@@ -73,12 +73,12 @@ const PostAgentPage = () => {
             
             if(!email.includes('@'))
                 return setValidationMessage("メールアドレスを正しく入力してください。");
-            if(Math.abs(phoneNumber[0]).toString().trim().length > 3 || Math.abs(phoneNumber[0]).toString().trim().length < 2
-                || Math.abs(phoneNumber[1]).toString().trim().length > 4 || Math.abs(phoneNumber[1]).toString().trim().length < 2
-                || Math.abs(phoneNumber[2]).toString().trim().length !== 4 )
-                return setValidationMessage("電話番号を正確に入力してください！");
-            if(Math.abs(postalNumber[0]).toString().trim().length !== 3 || Math.abs(postalNumber[1]).toString().trim().length !== 4 )
-                return setValidationMessage("郵便番号を正しく入力してください!");
+            // if(Math.abs(phoneNumber[0]).toString().trim().length > 3 || Math.abs(phoneNumber[0]).toString().trim().length < 2
+            //     || Math.abs(phoneNumber[1]).toString().trim().length > 4 || Math.abs(phoneNumber[1]).toString().trim().length < 2
+            //     || Math.abs(phoneNumber[2]).toString().trim().length !== 4 )
+            //     return setValidationMessage("電話番号を正確に入力してください！");
+            // if(Math.abs(postalNumber[0]).toString().trim().length !== 3 || Math.abs(postalNumber[1]).toString().trim().length !== 4 )
+            //     return setValidationMessage("郵便番号を正しく入力してください!");
             try {
                 const formData = new FormData();
                     // Append other form data
