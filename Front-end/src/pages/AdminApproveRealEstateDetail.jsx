@@ -66,7 +66,7 @@ const AdminApproveRealEstateDetail = () => {
             const res = await axios.post('/approveRealEstate', payload);
             setRealEstate(res.data.updatedRealEstate);
             setShowCategorySetModal(false);
-            setApproveBtnContent(unapproveText)
+            setApproveBtnContent(unapproveText);
         } catch (error) {
             console.log(error);
         }
